@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <head>
+    <title>Blackboard DTU Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main_new.css" />
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+    <script>
+      var config = {
+        apiKey: "AIzaSyBM75FQZH6AR1yWaXCdU8WnLDFkikoJtxQ",
+        authDomain: "blackboard-2b4b2.firebaseapp.com",
+        databaseURL: "https://blackboard-2b4b2.firebaseio.com",
+        storageBucket: "blackboard-2b4b2.appspot.com",
+        messagingSenderId: "1023630588927"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.css" />
+  </head>
+  <body>
+
+  <!-- Header -->
+    <header id="header">
+      <div class="inner">
+        <img src="images/whitelogo.png" alt="logo" height="100" align="left">
+        <nav id="nav">
+          <a href="http://dtu.ac.in/">Delhi Technological University</a>
+          <button id="sign-out" class="button alt">Sign Out</button>
+        </nav>
+        <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+      </div>
+    </header>
+
+  <!-- Banner -->
+    <section id="banner">
+      <div class="inner">
+        <div class="flex ">
+          <h1><p>Welcome to Blackboard &nbsp;</p></h1>
+          <!--div id="user-signed-in" class="hidden"-->
+            <!--div id="user-info"-->
+              <h1 id="name"></h1>
+              <!--div id="photo-container"><img id="photo"></img></div-->
+              <!--div id="email" style="display:none"></div>
+              <div class="clearfix" style="display:none"></div-->
+            <!--/div-->
+          <!--/div-->
+
+          <div>
+            <span class="icon fa-camera"></span>
+            <h3>Upload Attachment</h3>
+            <br>
+              <input type="text" name="title" id="demo-name" placeholder="Title"/>
+              <br>
+
+              <input type="radio" id="demo-priority-low" name="type" value="Assignment" checked>
+              <label for="demo-priority-low">Assignment</label>
+              <input type="radio" id="demo-priority-normal" name="type" value="Notes">
+              <label for="demo-priority-normal">Notes</label>
+              <input type="radio" id="demo-priority-high" name="type" value="Assignment">
+              <label for="demo-priority-high">Notification</label>
+
+
+              <!--select name="Type" id="demo-category" class="button alt">
+                <option value="">- Choose type of Attachment -</option>
+                <option value="Assignment">Assignment</option>
+                <option value="Notes">Notes</option>
+                <option value="Notification">Notification</option>
+              </select-->
+
+              <br><br>
+
+              <select name="branch" id="branch-category" class="button alt" onchange="m()">
+                <option value="0"  selected="selected">- Branch  -</option>
+                <option value="COE">COE</option>
+                <option value="IT">IT</option>
+                <option value="SE">SE</option>
+                <option value="MCE">MCE</option>
+                <option value="ECE">ECE</option>
+                <option value="EE">EE</option>
+                <option value="EEE">EEE</option>
+                <option value="EP">EP</option>
+                <option value="PSCT">PSCT</option>
+                <option value="ME">ME</option>
+                <option value="MPAE">MPAE</option>
+                <option value="CE">CE</option>
+                <option value="SE">SE</option>
+                <option value="BT">BT</option>
+                <option value="ENE">ENE</option>
+                <option value="PIE">PIE</option>
+              </select>
+              <script>
+              function m(){
+              var e = document.getElementById('branch-category');
+              var branch = e.options[e.selectedIndex].text;
+              console.log('branch = ' + branch);
+              }
+              </script>
+              <br><br>
+              <select name="sem" id="semester-category" class="button alt" onchange="n()">
+                <option value="0" selected="selected">- Semester  -</option>
+                <option value="1">I</option>
+                <option value="2">II</option>
+                <option value="3">III</option>
+                <option value="4">IV</option>
+                <option value="5">V</option>
+                <option value="6">VI</option>
+                <option value="7">VII</option>
+                <option value="8">VIII</option>
+              </select>
+
+              <script>
+              function n(){
+              var f = document.getElementById('semester-category');
+              var sem = f.options[f.selectedIndex].text;
+              console.log('semester = ' + sem);
+
+              console.log('Over here!!');
+
+              }
+              </script>
+
+              <br><br>
+
+              <select name="asignment-number" id="assignment-number-category" class="button alt" onchange="o()">
+                <option value="0" selected="selected">-Assignment Number-</option>
+                <option value="1">I</option>
+                <option value="2">II</option>
+                <option value="3">III</option>
+                <option value="4">IV</option>
+                <option value="5">V</option>
+              </select>
+
+              <script>
+              function o(){
+              var ji = document.getElementById('assignment-number-category');
+              var assnum = ji.options[ji.selectedIndex].value;
+              console.log('ass num = ' + assnum);
+
+              console.log('Over here!!');
+
+              }
+              </script>
+
+              <br><br>
+              <textarea name="message" id="demo-message" placeholder="Enter message to be posted along with the attachment." rows="3"></textarea>
+              <br>
+              <input type="file" id="files" name="files[]" multiple />
+              <output id="list"></output>
+              <style>
+                .thumb {
+                height: 75px;
+                border: 1px solid #000;
+                margin: 5px 5px 0 0;
+                }
+              </style>
+              <script>
+                function handleFileSelect(evt) {
+                  var files = evt.target.files;
+                  for (var i = 0, f; f = files[i]; i++) {
+                    if (!f.type.match('image.*')) {
+                      continue;
+                    }
+                    var reader = new FileReader();
+                    var fileName = null;
+                    reader.onload = (function(theFile) {
+                      return function(e) {
+                        var span = document.createElement('span');
+                        span.innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+                        document.getElementById('list').insertBefore(span, null);
+                        fileName = e.target.result;
+                      };
+                    })(f);
+                    reader.readAsDataURL(f);
+                    var storageRef = firebase.storage().ref();
+                    //var timestamp = Number(new Date());
+
+                    var fi = document.getElementById("semester-category");
+                    var sem = fi.options[fi.selectedIndex].value;
+                    console.log('semester = ' + sem);
+                    var e = document.getElementById("branch-category");
+                    var branch = e.options[e.selectedIndex].value;
+                    console.log('branch = ' + branch);
+
+                    var gh = document.getElementById('assignment-number-category');
+                    var ghh = gh.options[gh.selectedIndex].value;
+                    console.log('assignment-number = ' + ghh);
+
+                    console.log('Now over here baby');
+
+                    console.log('images-' + branch.toLowerCase()+ '-' + sem.toLowerCase() + '-' + ghh);
+
+                    var t = 'images-' + branch.toLowerCase()+ '-' + sem.toLowerCase() + '-' + ghh;
+                    console.log('t = ' + t);
+
+                    var text = document.getElementById('demo-message');
+                    var message = text.value;
+
+                    var title = document.getElementById('demo-name');
+                    var titlee = title.value;
+
+                    console.log('message = ' + message);
+                    console.log('title = ' + titlee);
+
+                    var metadata = {
+                      customMetadata: {
+                      'title' : titlee,
+                      'message': message
+                      }
+                    }
+
+
+                    var imagesRef = storageRef.child(t);
+                    imagesRef.put(f, metadata).then(function(snapshot) {
+                      console.log('Uploaded a blob or file!');
+                      var url = snapshot.metadata.downloadURLs[0];
+                      console.log('File available at', url);
+
+                      window.alert('Your file has been sent to the students.');
+
+                    });
+
+
+
+                  }
+                }
+                document.getElementById('files').addEventListener('change', handleFileSelect, false);
+              </script>
+              <br><br>
+              <button id="upload-image" class="button alt">Upload</button>
+
+          </div>
+          <div>
+            <span class="icon fa-bug"></span>
+            <h3>Push Notification</h3>
+            <p>Send a simple notification to the students</p><br>
+
+            <input type="text" name="title" id="demopush" placeholder="Write Message Here!"/>
+            <br><br>
+
+            <select name="branch" id="branch-category-push" class="button alt" onchange="z()">
+              <option value="">- Branch  -</option>
+              <option value="COE">COE</option>
+              <option value="IT">IT</option>
+              <option value="SE">SE</option>
+              <option value="MCE">MCE</option>
+              <option value="ECE">ECE</option>
+              <option value="EE">EE</option>
+              <option value="EEE">EEE</option>
+              <option value="EP">EP</option>
+              <option value="PSCT">PSCT</option>
+              <option value="ME">ME</option>
+              <option value="MPAE">MPAE</option>
+              <option value="CE">CE</option>
+              <option value="SE">SE</option>
+              <option value="BT">BT</option>
+              <option value="ENE">ENE</option>
+              <option value="PIE">PIE</option>
+            </select>
+
+            <script>
+            function z(){
+            var ddos = document.getElementById('branch-category-push');
+            var branch_push = ddos.options[ddos.selectedIndex].value;
+            console.log('branch push = ' + branch_push);
+
+            console.log('Over here!! IN PUSH!!');
+
+            }
+            </script>
+
+            <br><br>
+            <select name="sem" id="sem-category-push" class="button alt" onchange="zz()">
+              <option value="">- Semester  -</option>
+              <option value="1">I</option>
+              <option value="2">II</option>
+              <option value="3">III</option>
+              <option value="4">IV</option>
+              <option value="5">V</option>
+              <option value="6">VI</option>
+              <option value="7">VII</option>
+              <option value="8">VIII</option>
+            </select>
+
+            <script>
+            function zz(){
+            var abd = document.getElementById('sem-category-push');
+            var sem_push = abd.options[abd.selectedIndex].value;
+            console.log('semester push = ' + sem_push);
+            console.log('Over here!! In Push!! In Sem!!');
+            }
+            </script>
+
+            <br><br>
+            <!--textarea name="message" id="demo-message" placeholder="Enter message to be posted along with the attachment." rows="3"></textarea-->
+            <br>
+            <div>
+            <button onclick="sendPush()" id="send-message" class="button alt">Send Message</button>      <!-- Button for sending message is here-->
+            <script>
+            function sendPush(evt){
+            var storageRef = firebase.storage().ref();
+            //var timestamp = Number(new Date());
+
+            var fi2 = document.getElementById("sem-category-push");
+            var sem2 = fi2.options[fi2.selectedIndex].value;
+            console.log('semester push = ' + sem2);
+            var e2 = document.getElementById("branch-category-push");
+            var branch2 = e2.options[e2.selectedIndex].value;
+            console.log('branch = ' + branch2);
+
+            var maximum = 4;
+            var minimum = 1;
+            var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+
+            console.log('randomnumber = ' + randomnumber);
+
+            var t2 = 'message-' + branch2.toLowerCase()+ '-' + sem2.toLowerCase() + '-' + randomnumber ;
+            console.log('t2 = ' + t2);
+
+            var push_element = document.getElementById("demopush");
+            var push_message = push_element.value;
+
+            console.log('push message = ' + push_message);
+
+            messageRef = storageRef.child(t2);
+
+            var metadata = {
+              customMetadata: {
+              'message': push_message
+              }
+            }
+
+            messageRef.putString(push_message, 'raw', metadata).then(function(snapshot) {
+            console.log('Uploaded a raw string!');
+            var url2 = snapshot.metadata.downloadURLs[0];
+            console.log('File available at = ', url2);
+
+            window.alert('Your notification has been sent to the students.');
+
+            });
+
+
+
+          }
+            </script>
+
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="copyright">
+          Presented by Mayank Saxena & Navjot Singh.
+      </div>
+    </section>
+
+    <div id="loading">Loading...</div>
+    <div id="loaded" class="hidden">
+      <div id="main">
+          <div id="user-signed-in" class="hidden"></div>
+          <div id="user-signed-out" class="hidden"></div>
+      </div>
+    </div>
+
+    <script src="app-2.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

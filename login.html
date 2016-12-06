@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Blackboard DTU Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+  
+    <script>
+    	var config = {
+    	  apiKey: "AIzaSyBM75FQZH6AR1yWaXCdU8WnLDFkikoJtxQ",
+    	  authDomain: "blackboard-2b4b2.firebaseapp.com",
+    	  databaseURL: "https://blackboard-2b4b2.firebaseio.com",
+    	  storageBucket: "blackboard-2b4b2.appspot.com",
+    	  messagingSenderId: "1023630588927"
+    	};
+   	  firebase.initializeApp(config);
+    </script>
+  
+    <script src="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.css" />
+  
+  </head>
+
+  <body>
+    
+    <div id="container">
+
+    <!-- Header -->
+      <header id="header">
+        <div class="inner">
+          <img src="images/whitelogo.png" alt="logo" height="100" align="left">
+          <nav id="nav">
+            <a href="http://dtu.ac.in/">Delhi Technological University</a>
+          </nav>
+          <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </div>
+      </header>
+    
+    <!-- Banner -->
+      <section id="banner">
+        <div class="inner">
+          <header>
+            <h2>Blackboard</h2>
+            <h3>Student-Teacher Document Sharing Portal</h3>
+          </header>
+          <div class="flex ">
+            <div>
+              <img src="images/key.png" alt="key" height="20%">
+              <h3>Teacher Login</h3>
+              <p>Please login using your email account</p>
+              <br>
+                <div id="loading">Loading...</div>
+                <div id="loaded" class="hidden">
+                <!--div id="firebaseui-container"></div-->
+                <div id="user-signed-in" class="hidden">
+                </div>
+                <div id="user-signed-out" class="hidden">
+                  <div id="firebaseui-spa">
+                    <div id="firebaseui-container"></div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+            Presented by Mayank Saxena & Navjot Singh.
+        </div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
